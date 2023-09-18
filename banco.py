@@ -106,58 +106,57 @@ class Banco:
     def transferir_fondos(self,id_cuenta_origen, id_cuenta_destino, monto):
         if self.hacer_retiro(id_cuenta_origen, monto):
             self.hacer_deposito(id_cuenta_destino, monto)
-            self.registrar_transaccion(id_cuenta_origen, "Retiro", monto)
-            self.registrar_transaccion(id_cuenta_destino, "Deposito", monto)
-            print("Transferencia exitos, favor de consultar su saldo")
             return True
         else:
             return False
 
-    def opciones():
-        print('''
+def menu():
+    banco = Banco()
+    while True:
+        print("\n")
+        print("╔═══════════════════════════════════╗")
+        print("║        Simulador de Banco         ║")
+        print("╟───────────────────────────────────╢")
+        print("║ 1. Crear Nueva Cuenta             ║")
+        print("║ 2. Consultar Saldo                ║")
+        print("║ 3. Hacer Depósito                 ║")
+        print("║ 4. Hacer Retiro                   ║")
+        print("║ 5. Transferir Fondos              ║")
+        print("║ 6. Ver Historial de Transacciones ║")
+        print("║ 7. Salir                          ║")
+        print("╚═══════════════════════════════════╝")
         
-    ---------WELCOME---------------------------
-        1- Crear cuenta
-        2- Consultar saldo en cuenta
-        3- Hacer un deposito
-        4- Hacer retiros
-        5- Hacer transferencia
-        6- Historial de transacciones
-        7- Salir
-    ------------------------------------------
-        ''')
-        while True:
-            centinela = input("Elija la opcion de su preferencia: ")
-            if centinela in ["1", "2", "3", "4", "5", "6", "7"]:
-                return centinela
-            print("[!] Opcion no valida, reintente\n")
-    
-    def acciones(centinela):
-        if centinela == "1":
-            id_cuenta=int(input("Ingrese su Numero de Cuenta: "))
-            saldo_inicial=Decimal(input("Ingrese el saldo inicial: "))
+        opcion = input("Seleccione una opcion: ")
+
+        if opcion == "1":
+            nombre_cliente = input("Ingrese el nombre del cliente: ")
+            saldo_inicial = Decimal(input("Ingrese el saldo inicial: "))
             banco.crear_cuenta(nombre_cliente,saldo_inicial)
-        elif centinela == "2":
-            id_cuenta=int(input("Ingrese ID de la Cuenta: "))
+        elif opcion == "2":
+            id_cuenta = int(input("Ingrese el ID de la cuenta: "))
             banco.consultar_saldo(id_cuenta)
-        elif centinela == "3":
-            id_cuenta=int(input("Ingrese ID de la Cuenta: "))
-            monto=Decimal(input("Ingrese el monto a depositar: "))
+        elif opcion == "3":
+            id_cuenta = int(input("Ingrese el ID de la cuenta: "))
+            monto = Decimal(input("Ingrese el monto a depositar: "))
             banco.hacer_deposito(id_cuenta,monto)
-        elif centinela == "4":
-            id_cuenta=int(input("Ingrese ID de la Cuenta: "))
-            monto=Decimal(input("Ingrese el monto a retirar: "))
+        elif opcion == "4":
+            id_cuenta = int(input("Ingrese el ID de la cuenta: "))
+            monto = Decimal(input("Ingrese el monto a retirar: "))
             banco.hacer_retiro(id_cuenta,monto)
-        elif centinela == "5":
-            id_origen=int(input("Ingrese ID de la Cuenta de origen: "))
-            id_destino=int(input("Ingrese ID de la Cuenta de destino: "))
-            monto=Decimal(input("Ingrese el monto a depositar: "))
-            banco.transferir_fondos(id_origen,id_destino,monto)
-        elif centinela == "6":
-            id_cuenta=int(input("Ingrese ID de la Cuenta: "))
-            monto=Decimal(input("Ingrese el monto a depositar: "))
-            banco.hacer_deposito(id_cuenta,monto)
-        elif centinela == "7":
-            print("Gracias por participar!")
-    opt = opciones()
-    acciones(opt)
+        elif opcion == "5":
+            id_origen = int(input("Ingrese el ID de la cuenta de origen: "))
+            id_destino = int(input("Ingrese el ID de la cuenta de destino: "))
+            monto = Decimal(input("Ingrese el monto a transferir: "))
+            banco.transferir_fondos(id_origen,id_destino, monto)
+        elif opcion == "6":
+            id_cuenta = int(input("Ingrese el ID de la cuenta: "))
+            banco.ver_transacciones(id_cuenta)
+        elif opcion == "7":
+            print("Gracias por usar el simulador de banco. Hasta Luego!")
+            banco.cerrar_conexion()
+            break
+        else:
+            print("La opcion ingresada no es valida. Por favor, seleccione una opcion valida. ")
+
+if __name__=="__main__":
+    menu()
