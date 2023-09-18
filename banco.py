@@ -106,6 +106,9 @@ class Banco:
     def transferir_fondos(self,id_cuenta_origen, id_cuenta_destino, monto):
         if self.hacer_retiro(id_cuenta_origen, monto):
             self.hacer_deposito(id_cuenta_destino, monto)
+            self.registrar_transaccion(id_cuenta_origen, "Retiro", monto)
+            self.registrar_transaccion(id_cuenta_destino, "Deposito", monto)
+            print("Transferencia exitos, favor de consultar su saldo")
             return True
         else:
             return False
