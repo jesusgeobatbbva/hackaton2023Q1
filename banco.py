@@ -103,6 +103,13 @@ class Banco:
         except Error as e:
             print("Error al registrar la transaccion")
 
+    def transferir_fondos(self,id_cuenta_origen, id_cuenta_destino, monto):
+        if self.hacer_retiro(id_cuenta_origen, monto):
+            self.hacer_deposito(id_cuenta_destino, monto)
+            return True
+        else:
+            return False
+
     def opciones():
         print('''
         
